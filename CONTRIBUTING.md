@@ -195,7 +195,7 @@ on each other), the owner should try to get people aligned by:
   split it up.
 - If none of the above worked and the PR has been stuck for more than 2 weeks,
   the owner should bring it to the OpenTelemetry Community Demo SIG
-  [meeting](README.md#contributing).
+  [meeting](original_readme#contributing).
 
 ## Making a new release
 
