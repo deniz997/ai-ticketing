@@ -1,0 +1,11 @@
+resources:
+  - service.yaml
+  - RoleBinding.yaml
+  - deployment.yaml
+  - secret.yaml
+  - config.yaml
+  - Role.yaml
+  - ClusterRole.yaml
+  - ClusterRoleBinding.yaml
+  - config_dashboards.yaml
+  - ServiceAccount.yaml

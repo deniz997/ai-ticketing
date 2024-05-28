@@ -1,0 +1,5 @@
+namespace: otel-demo
+
+resources:
+  - flagd
+  - loadgenerator

@@ -1,0 +1,4 @@
+resources:
+  - ServiceAccount.yaml
+  - pod.yaml
+  - config.yaml

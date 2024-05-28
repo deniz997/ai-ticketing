@@ -1,0 +1,20 @@
+namespace: otel-demo
+
+resources:
+  - 0_global
+  - accountingservice
+  - adservice
+  - cartservice
+  - checkoutservice
+  - currencyservice
+  - emailservice
+  - frauddetectionservice
+  - frontend
+  - frontendproxy
+  - kafka
+  - paymentservice
+  - productcatalogservice
+  - quoteservice
+  - recommendationservice
+  - redis
+  - shippingservice

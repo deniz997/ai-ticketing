@@ -1,0 +1,6 @@
+resources:
+  - service_headless.yaml
+  - StatefulSet.yaml
+  - config.yaml
+  - PodDisruptionBudget.yaml
+  - service.yaml

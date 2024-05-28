@@ -1,0 +1,6 @@
+resources:
+  - service_agent.yaml
+  - deployment.yaml
+  - ServiceAccount.yaml
+  - service_query.yaml
+  - service_collector.yaml
