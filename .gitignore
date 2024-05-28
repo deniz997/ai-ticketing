@@ -58,3 +58,17 @@ test/tracetesting/tracetesting-vars.yaml
 /src/currencyservice/proto
 /src/checkoutservice/genproto
 /src/accountingservice/genproto
+
+# Ignore IDE and IaC helper files
+/.idea
+/iac/gcp/.terraform/
+/iac/gcp/.terraform.lock.hcl
+/iac/gcp/.terraform.tfstate.lock.info
+/iac/gcp/terraform.tfstate
+/iac/gcp/terraform.tfstate.backup
+/iac/aws/terraform.tfstate.backup
+/iac/aws/terraform.tfstate
+/iac/aws/.terraform.lock.hcl
+/iac/aws/.terraform/
+/iac/aws/.terraform.tfstate.lock.info
+/kubernetes/output_files/
