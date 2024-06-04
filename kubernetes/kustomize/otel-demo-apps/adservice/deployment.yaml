@@ -30,6 +30,7 @@ spec:
       containers:
         - name: adservice
           image: 'ghcr.io/open-telemetry/demo:1.9.0-adservice'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/adservice:original
           imagePullPolicy: IfNotPresent
           ports:
 
@@ -60,5 +61,3 @@ spec:
           resources:
             limits:
               memory: 300Mi
-          volumeMounts:
-      volumes:

@@ -21,3 +21,13 @@ You may run this service locally with `bundle exec ruby email_server.rb`.
 ## Docker Build
 
 From `src/emailservice`, run `docker build .`
+## Docker Build
+
+From the root directory, run:
+
+**GitLab container registry:**
+```sh
+docker login git.tu-berlin.de:5000
+docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/emailservice:original -f ./src/emailservice/Dockerfile .
+docker push git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/emailservice:original
+```

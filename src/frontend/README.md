@@ -24,3 +24,13 @@ from the root folder.
 It will start all of the required backend services
 and within the container simply run `npm run dev`.
 After that the app should be available at <http://localhost:8080/>.
+## Docker Build
+
+From the root directory, run:
+
+**GitLab container registry:**
+```sh
+docker login git.tu-berlin.de:5000
+docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/frontend:original -f ./src/frontend/Dockerfile .
+docker push git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/frontend:original
+```

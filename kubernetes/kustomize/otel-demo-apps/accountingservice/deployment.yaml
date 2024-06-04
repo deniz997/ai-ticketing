@@ -30,6 +30,7 @@ spec:
       containers:
         - name: accountingservice
           image: 'ghcr.io/open-telemetry/demo:1.9.0-accountingservice'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/accountingservice:original
           imagePullPolicy: IfNotPresent
           env:
           - name: OTEL_SERVICE_NAME

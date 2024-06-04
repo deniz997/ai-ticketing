@@ -30,6 +30,7 @@ spec:
       containers:
         - name: loadgenerator
           image: 'ghcr.io/open-telemetry/demo:1.9.0-loadgenerator'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/loadgenerator:original
           imagePullPolicy: IfNotPresent
           ports:
 
@@ -72,5 +73,3 @@ spec:
           resources:
             limits:
               memory: 1Gi
-          volumeMounts:
-      volumes:

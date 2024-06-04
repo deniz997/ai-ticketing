@@ -30,6 +30,7 @@ spec:
       containers:
         - name: frontendproxy
           image: 'ghcr.io/open-telemetry/demo:1.9.0-frontendproxy'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/frontendproxy:original
           imagePullPolicy: IfNotPresent
           ports:
 
@@ -78,5 +79,3 @@ spec:
             runAsGroup: 101
             runAsNonRoot: true
             runAsUser: 101
-          volumeMounts:
-      volumes:

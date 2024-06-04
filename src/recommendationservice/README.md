@@ -23,10 +23,3 @@ docker login git.tu-berlin.de:5000
 docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/recommendationservice:original -f ./src/recommendationservice/Dockerfile .
 docker push git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/recommendationservice:original
 ```
-
-Docker Hub container registry:
-```sh
-docker login
-docker build -t jmgoyesc/opentelemetry-demo-recommendationservice:original -f ./src/recommendationservice/Dockerfile .
-docker push jmgoyesc/opentelemetry-demo-recommendationservice:original
-```

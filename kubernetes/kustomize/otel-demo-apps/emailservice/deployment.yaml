@@ -30,6 +30,7 @@ spec:
       containers:
         - name: emailservice
           image: 'ghcr.io/open-telemetry/demo:1.9.0-emailservice'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/emailservice:original
           imagePullPolicy: IfNotPresent
           ports:
 
@@ -56,5 +57,3 @@ spec:
           resources:
             limits:
               memory: 100Mi
-          volumeMounts:
-      volumes:

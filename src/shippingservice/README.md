@@ -21,3 +21,13 @@ docker compose build shippingservice
 ```sh
 cargo test
 ```
+## Docker Build
+
+From the root directory, run:
+
+**GitLab container registry:**
+```sh
+docker login git.tu-berlin.de:5000
+docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/shippingservice:original -f ./src/shippingservice/Dockerfile .
+docker push git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/shippingservice:original
+```

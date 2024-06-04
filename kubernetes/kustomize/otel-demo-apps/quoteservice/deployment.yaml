@@ -30,6 +30,7 @@ spec:
       containers:
         - name: quoteservice
           image: 'ghcr.io/open-telemetry/demo:1.9.0-quoteservice'
+          #image: git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/quoteservice:original
           imagePullPolicy: IfNotPresent
           ports:
 
@@ -60,5 +61,3 @@ spec:
             runAsGroup: 33
             runAsNonRoot: true
             runAsUser: 33
-          volumeMounts:
-      volumes:

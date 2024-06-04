@@ -8,7 +8,8 @@ FROM base as builder
 
 WORKDIR /tmp
 
-COPY Gemfile Gemfile.lock .
+COPY ./src/emailservice/Gemfile ./Gemfile
+COPY ./src/emailservice/Gemfile.lock ./Gemfile.lock
 
 #RUN apk update && apk add make gcc musl-dev gcompat && bundle install
 RUN apt-get update && apt-get install build-essential -y && bundle install
@@ -16,7 +17,7 @@ FROM base as release
 
 WORKDIR /email_server
 
-COPY . .
+COPY ./src/emailservice/ .
 
 RUN chmod 666 ./Gemfile.lock
 
