@@ -10,7 +10,7 @@
 
 ### Terraform
 
-Follow the documentation to use GCP provider in terraform: [https://registry.terraform.io/providers/hashicorp/aws/latest/docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+Follow the documentation to use AWS provider in terraform: [https://registry.terraform.io/providers/hashicorp/aws/latest/docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
 ```shell
 terraform init

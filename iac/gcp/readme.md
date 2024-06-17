@@ -77,9 +77,3 @@ kubectl delete -f ingress.yaml
 kubectl delete --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
 terraform destroy
 ```
-
--- refactor
-3 namespaces: 
-- otel-demo-apps
-- otel-demo-observability
-- otel-demo-load
