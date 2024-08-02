@@ -1,0 +1,19 @@
+// trace.proto
+syntax = "proto3";
+
+package opentelemetry.proto.trace.v1;
+
+message ResourceSpans {
+    repeated InstrumentationLibrarySpans instrumentation_library_spans = 2;
+}
+
+message InstrumentationLibrarySpans {
+    repeated Span spans = 1;
+}
+
+message Span {
+    string trace_id = 1;
+    string span_id = 2;
+    string name = 3;
+    // Add other fields as needed
+}

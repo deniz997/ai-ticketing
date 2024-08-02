@@ -696,8 +696,15 @@ services:
       - ./src/otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
       - ./src/otelcollector/otelcol-config-extras.yml:/etc/otelcol-config-extras.yml
     ports:
-      - "${OTEL_COLLECTOR_PORT_GRPC}"
-      - "${OTEL_COLLECTOR_PORT_HTTP}"
+#      - "${OTEL_COLLECTOR_PORT_GRPC}"
+#      - "${OTEL_COLLECTOR_PORT_HTTP}"
+      - 1888:1888 # pprof extension
+      - 8888:8888 # Prometheus metrics exposed by the Collector
+      - 8889:8889 # Prometheus exporter metrics
+      - 13133:13133 # health_check extension
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+      - 55679:55679 # zpages extension
     depends_on:
       - jaeger
     logging: *logging
@@ -884,3 +891,22 @@ services:
       retries: 60
     ports:
       - 5432
+
+  express-server:
+    image: express-server:latest
+#    build:
+#      context: ./
+#      dockerfile: ./src/express-server/Dockerfile
+    container_name: express-server
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+    restart: unless-stopped
+    ports:
+      - "${EXPRESS_SERVER_PORT}:${EXPRESS_SERVER_PORT}"
+      - "${JAEGER_SERVICE_PORT}"         # Jaeger UI
+      - "${OTEL_COLLECTOR_PORT_GRPC}"
+    environment:
+      - EXPRESS_SERVER_PORT
+    logging: *logging

@@ -33,6 +33,10 @@ exporters:
       endpoint: "http://opensearch:9200"
       tls:
         insecure: true
+  otlphttp/express:
+    endpoint: "http://express-server:3333"
+    tls:
+      insecure: true
 
 processors:
   batch:
@@ -45,7 +49,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp, debug, spanmetrics]
+      exporters: [otlp, debug, spanmetrics, debug, otlphttp/express]
     metrics:
       receivers: [httpcheck/frontendproxy, redis, otlp, spanmetrics]
       processors: [batch]

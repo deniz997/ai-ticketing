@@ -7,5 +7,5 @@ variable "region" {
 variable "project_id" {
   description = "GCP project ID"
   type        = string
-  default     = "cnae-open-telemetrics"
+  default     = "cnae-open-telemetrics-424910"
 }
