@@ -35,6 +35,7 @@ exporters:
         insecure: true
   otlphttp/express:
     endpoint: "http://express-server:3333"
+    encoding: json
     tls:
       insecure: true
 
