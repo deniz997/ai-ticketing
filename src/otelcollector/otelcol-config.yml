@@ -41,6 +41,14 @@ exporters:
 
 processors:
   batch:
+  filter/traces:
+    error_mode: propagate
+    traces:
+      span:
+#        - 'resource.attributes["service.name"] != "frontend-proxy"'
+#        - 'attributes["http.status_code"] != "500"'
+        - 'attributes["error"] != "true"'
+
 
 connectors:
   spanmetrics:
@@ -49,7 +57,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [batch, filter/traces]
       exporters: [otlp, debug, spanmetrics, debug, otlphttp/express]
     metrics:
       receivers: [httpcheck/frontendproxy, redis, otlp, spanmetrics]
