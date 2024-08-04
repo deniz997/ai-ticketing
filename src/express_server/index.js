@@ -9,23 +9,24 @@ const { PeriodicExportingMetricReader } = require("@opentelemetry/sdk-metrics");
 // Initialize OpenTelemetry
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 
+// Activate the following lines to instrument express-server service
 // Set up the OTLP trace exporter
-const traceExporter = new OTLPTraceExporter({
-    url: "http://localhost:3333/v1/traces",
-});
+// const traceExporter = new OTLPTraceExporter({
+//     url: "http://localhost:3333/v1/traces",
+// });
 
 // Set up the OTLP metric exporter
-const metricExporter = new OTLPMetricExporter({
-    url: "http://localhost:3333/v1/metrics",
-});
+// const metricExporter = new OTLPMetricExporter({
+//     url: "http://localhost:3333/v1/metrics",
+// });
 
 // Initialize the OpenTelemetry Node SDK
 const sdk = new NodeSDK({
-    traceExporter,
-    metricReader: new PeriodicExportingMetricReader({
-        exporter: metricExporter,
-        exportIntervalMillis: 1000,
-    }),
+    // traceExporter,
+    // metricReader: new PeriodicExportingMetricReader({
+    //     exporter: metricExporter,
+    //     exportIntervalMillis: 1000,
+    // }),
 });
 
 sdk.start();
@@ -46,9 +47,9 @@ app.post("/v1/traces", (req, res) => {
     }
 });
 
-app.post("/v1/metrics", (req, res) => {
-    res.status(200).send("Metric data received");
-});
+// app.post("/v1/metrics", (req, res) => {
+//     res.status(200).send("Metric data received");
+// });
 
 app.get("/", (req, res) => {
     res.send("Express Server is running with OTLP support");
