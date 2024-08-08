@@ -41,13 +41,21 @@ exporters:
 
 processors:
   batch:
+  groupbytrace/2:
+    wait_duration: 5s
+#  tail_sampling:
+#    policies:
+#      - name: error-trace-sampling
+#        type: status_code
+#        status_code:
+#          status_codes: [ ERROR ]
   filter/traces:
     error_mode: propagate
     traces:
       span:
-#        - 'resource.attributes["service.name"] != "frontend-proxy"'
-#        - 'attributes["http.status_code"] != "500"'
-        - 'attributes["error"] != "true"'
+#        - 'attributes["error"] != "true"'
+        - 'attributes["canceled"] != "true"'
+        - 'resource.attributes["service.name"] != "frontend-proxy"'
 
 
 connectors:
@@ -57,7 +65,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch, filter/traces]
+      processors: [groupbytrace/2, filter/traces]
       exporters: [otlp, debug, spanmetrics, debug, otlphttp/express]
     metrics:
       receivers: [httpcheck/frontendproxy, redis, otlp, spanmetrics]
@@ -66,4 +74,4 @@ service:
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [opensearch, debug]
+      exporters: [opensearch, debug, otlphttp/express]
