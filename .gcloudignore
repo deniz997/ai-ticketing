@@ -1,0 +1,7 @@
+trace.json
+node_modules
+main.tf
+.tfvars
+.terraform
+.terraform.*
+prompt.txt

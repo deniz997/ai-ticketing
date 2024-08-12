@@ -1,0 +1,21 @@
+{
+  "name": "ticketingservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=21.0.0"
+  },
+  "scripts": {
+    "test": "functions-framework --target=ticketing --port=8000 --env-file .env.yaml"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.2",
+    "@google-cloud/storage": "^7.12.0",
+    "ai-connector": "file:local-modules/ai-connector",
+    "openai": "^4.53.2",
+    "preprocessing": "file:local-modules/preprocessing"
+  }
+}
