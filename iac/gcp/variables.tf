@@ -45,3 +45,15 @@ variable "entry_point" {
     nullable = false
     default = "ticketing"
 }
+
+variable "notion_apikey" {
+    type = string
+    nullable = false
+    sensitive = true
+}
+
+variable "notion_db_id" {
+    type = string
+    nullable = false
+    default = "179f83708c30426d92afddaa157d3503"
+}

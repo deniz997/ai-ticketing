@@ -1,2 +1,4 @@
 openai_key = "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"
 project_id = "cnae-open-telemetrics-deniz"
+notion_apikey = "secret_SVDk88Ij9CaG18YboWXMBl8SbDMhNhcwVs5dB6L7BsP"
+notion_db_id = "179f83708c30426d92afddaa157d3503"
