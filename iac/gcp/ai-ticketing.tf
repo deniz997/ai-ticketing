@@ -49,6 +49,13 @@ resource "google_cloudfunctions2_function" "ai-ticketing" {
       secret     = google_secret_manager_secret.openaikey.secret_id
       version    = "latest"
     }
+
+    secret_environment_variables {
+      key        = "NOTION_API_KEY"
+      project_id = var.project_id
+      secret     = google_secret_manager_secret.openaikey.secret_id
+      version    = "latest"
+    }
   }
 }
 
@@ -86,6 +93,21 @@ resource "google_secret_manager_secret_version" "secret" {
   secret = google_secret_manager_secret.openaikey.name
 
   secret_data = var.openai_key
+  enabled = true
+}
+
+resource "google_secret_manager_secret" "notionapikey" {
+  secret_id = "notion_apikey"
+
+  replication {
+    automatic = true
+  }
+}
+
+resource "google_secret_manager_secret_version" "secret" {
+  secret = google_secret_manager_secret.notionapikey.name
+
+  secret_data = var.notion_apikey
   enabled = true
 }
 

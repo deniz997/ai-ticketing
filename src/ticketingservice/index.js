@@ -2,12 +2,6 @@ const functions = require('@google-cloud/functions-framework');
 const { sendMessage } = require('./local-modules/ai-connector');
 const { preprocess } = require('./local-modules/preprocessing');
 
-const { Client } = require("@notionhq/client")
-
-const notion = new Client({
-    auth: process.env.NOTION_TOKEN || 'secret_SVDk88Ij9CaG18YboWXMBl8SbDMhNhcwVs5dB6L7BsP',
-})
-
 functions.http('ticketing', async (req, res) => {
     switch (req.method) {
         case 'POST':
@@ -15,11 +9,10 @@ functions.http('ticketing', async (req, res) => {
             if(trace == null){
                 res.status(400).send("Trace data could not be found!");
             }
-            const body = JSON.parse(req.body, null, 2);
-            res.status(200).send(JSON.stringify(body));
-            //const preprocessedTrace = preprocess(trace);
-            //const gptResponse = await sendMessage(preprocessedTrace);
-
+        
+            const preprocessedTrace = preprocess(trace);
+            const gptResponse = await sendMessage(preprocessedTrace);
+            const ticket = await 
             res.status(200).send(gptResponse)
         default:
             res.status(405).send("Unsupported method!");

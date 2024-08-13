@@ -14,8 +14,11 @@
   "dependencies": {
     "@google-cloud/functions-framework": "^3.4.2",
     "@google-cloud/storage": "^7.12.0",
+    "@notionhq/client": "^2.2.15",
     "ai-connector": "file:local-modules/ai-connector",
     "openai": "^4.53.2",
     "preprocessing": "file:local-modules/preprocessing"
+    "ticketing": "file:local-modules/ticketing"
+
   }
 }
