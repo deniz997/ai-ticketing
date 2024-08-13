@@ -7,7 +7,7 @@
     "node": ">=21.0.0"
   },
   "scripts": {
-    "test": "functions-framework --target=ticketing --port=8000 --env-file .env.yaml"
+    "test": "yaml2json .env.yaml >.env.json &&  env-cmd -r ./.env.json functions-framework --target=ticketing --port=8000"
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +17,11 @@
     "@notionhq/client": "^2.2.15",
     "ai-connector": "file:local-modules/ai-connector",
     "openai": "^4.53.2",
-    "preprocessing": "file:local-modules/preprocessing"
+    "preprocessing": "file:local-modules/preprocessing",
     "ticketing": "file:local-modules/ticketing"
-
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "yaml2json": "^1.0.2"
   }
 }

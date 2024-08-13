@@ -41,6 +41,7 @@ resource "google_cloudfunctions2_function" "ai-ticketing" {
     
     environment_variables = {
         MODEL_TYPE: var.model_type
+        NOTION_DB_ID: var.notion_db_id
     }
 
     secret_environment_variables {

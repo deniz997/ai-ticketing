@@ -13,6 +13,9 @@
 
 docker-compose.override.yml
 
+src/ticketingservice/.env.json
+src/ticketingservice/package-lock.json
+
 # Eclipse
 .classpath
 .project

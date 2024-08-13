@@ -51,3 +51,9 @@ variable "notion_apikey" {
     nullable = false
     sensitive = true
 }
+
+variable "notion_db_id" {
+    type = string
+    nullable = false
+    default = "179f83708c30426d92afddaa157d3503"
+}

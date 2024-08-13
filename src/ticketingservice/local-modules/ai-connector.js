@@ -16,16 +16,19 @@ const systemPrompt = `You are a Support Engineer at a software company that prov
 - 3-5 tags to categorize the issue`;
 
 async function chat(msg) {
-    const completion = await openai.chat.completions.create({
-        messages: [
-            {"role": "system", "content": systemPrompt},
-            {"role": "user", "content": msg}
-          ],
-        model: MODEL_TYPE,
-    });
-    
-    console.log(completion.choices[0]);
-    return completion.choices;
+    try {
+        const completion = await openai.chat.completions.create({
+            messages: [
+                {"role": "system", "content": systemPrompt},
+                {"role": "user", "content": msg}
+            ],
+            model: MODEL_TYPE,
+        });
+        return completion.choices[0].message.content;
+    } catch (error) {
+        console.log(error)
+        throw {source:"AI Connector", status: error.status, message: error.error.message};
+    }
 } 
 
 module.exports.sendMessage = async function(msg) {
