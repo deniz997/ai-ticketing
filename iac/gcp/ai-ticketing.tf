@@ -92,3 +92,8 @@ resource "google_secret_manager_secret_version" "secret" {
 output "function_uri" {
   value = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri
 }
+
+resource "local_file" "otel_configmap_template" {
+  content  = templatefile("../../kubernetes/opentelemetry-demo.tpl", { ai_ticketing_endpoint = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri })
+  filename = "../../kubernetes/opentelemetry-demo.yaml"
+}

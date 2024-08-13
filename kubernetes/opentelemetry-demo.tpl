@@ -148,7 +148,7 @@ data:
         - datasourceUid: webstore-traces
           name: trace_id
         - name: trace_id
-          url: http://localhost:8080/jaeger/ui/trace/$${__value.raw}
+          url: http://localhost:8080/jaeger/ui/trace/$$${__value.raw}
           urlDisplayLabel: View in Jaeger UI
       name: Prometheus
       type: prometheus
@@ -281,14 +281,14 @@ data:
         tls:
           insecure: true
       otlphttp/ai_ticketing:
-        endpoint: http://opentelemetry-demo-ai-ticketing:3334
+        endpoint: ${ai_ticketing_endpoint}
         encoding: json
         tls:
           insecure: true
       
     extensions:
       health_check:
-        endpoint: ${env:MY_POD_IP}:13133
+        endpoint: $${env:MY_POD_IP}:13133
     processors:
       batch: {}
       k8sattributes:
@@ -335,21 +335,21 @@ data:
       jaeger:
         protocols:
           grpc:
-            endpoint: ${env:MY_POD_IP}:14250
+            endpoint: $${env:MY_POD_IP}:14250
           thrift_compact:
-            endpoint: ${env:MY_POD_IP}:6831
+            endpoint: $${env:MY_POD_IP}:6831
           thrift_http:
-            endpoint: ${env:MY_POD_IP}:14268
+            endpoint: $${env:MY_POD_IP}:14268
       otlp:
         protocols:
           grpc:
-            endpoint: ${env:MY_POD_IP}:4317
+            endpoint: $${env:MY_POD_IP}:4317
           http:
             cors:
               allowed_origins:
               - http://*
               - https://*
-            endpoint: ${env:MY_POD_IP}:4318
+            endpoint: $${env:MY_POD_IP}:4318
       prometheus:
         config:
           scrape_configs:
@@ -357,9 +357,9 @@ data:
             scrape_interval: 10s
             static_configs:
             - targets:
-              - ${env:MY_POD_IP}:8888
+              - $${env:MY_POD_IP}:8888
       zipkin:
-        endpoint: ${env:MY_POD_IP}:9411
+        endpoint: $${env:MY_POD_IP}:9411
     
     service:
       extensions:
@@ -406,7 +406,7 @@ data:
           - zipkin
       telemetry:
         metrics:
-          address: ${env:MY_POD_IP}:8888
+          address: $${env:MY_POD_IP}:8888
 ---
 # Source: opentelemetry-demo/charts/prometheus/templates/cm.yaml
 apiVersion: v1
@@ -716,7 +716,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "histogram_quantile(0.50, sum(rate(duration_milliseconds_bucket{service_name=\"${service}\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.50, sum(rate(duration_milliseconds_bucket{service_name=\"$${service}\"}[$__rate_interval])) by (le))",
               "legendFormat": "quantile50",
               "range": true,
               "refId": "A"
@@ -728,7 +728,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "histogram_quantile(0.95, sum(rate(duration_milliseconds_bucket{service_name=\"${service}\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.95, sum(rate(duration_milliseconds_bucket{service_name=\"$${service}\"}[$__rate_interval])) by (le))",
               "hide": false,
               "legendFormat": "quantile95",
               "range": true,
@@ -741,7 +741,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "histogram_quantile(0.99, sum(rate(duration_milliseconds_bucket{service_name=\"${service}\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.99, sum(rate(duration_milliseconds_bucket{service_name=\"$${service}\"}[$__rate_interval])) by (le))",
               "hide": false,
               "legendFormat": "quantile99",
               "range": true,
@@ -754,14 +754,14 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "histogram_quantile(0.999, sum(rate(duration_milliseconds_bucket{service_name=\"${service}\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.999, sum(rate(duration_milliseconds_bucket{service_name=\"$${service}\"}[$__rate_interval])) by (le))",
               "hide": false,
               "legendFormat": "quantile999",
               "range": true,
               "refId": "D"
             }
           ],
-          "title": "Latency for ${service}",
+          "title": "Latency for $${service}",
           "type": "timeseries"
         },
         {
@@ -849,14 +849,14 @@ data:
                 "uid": "webstore-metrics"
               },
               "editorMode": "code",
-              "expr": " sum by (span_name) (rate(calls_total{status_code=\"STATUS_CODE_ERROR\", service_name=\"${service}\"}[$__rate_interval]))",
+              "expr": " sum by (span_name) (rate(calls_total{status_code=\"STATUS_CODE_ERROR\", service_name=\"$${service}\"}[$__rate_interval]))",
               "interval": "",
               "legendFormat": "{{ span_name }}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Error Rate for ${service} by span name",
+          "title": "Error Rate for $${service} by span name",
           "type": "timeseries"
         },
         {
@@ -944,13 +944,13 @@ data:
                 "uid": "webstore-metrics"
               },
               "editorMode": "code",
-              "expr": "sum by (span_name) (rate(duration_milliseconds_count{service_name=\"${service}\"}[$__rate_interval]))",
+              "expr": "sum by (span_name) (rate(duration_milliseconds_count{service_name=\"$${service}\"}[$__rate_interval]))",
               "legendFormat": "{{ span_name }}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Requests Rate for ${service} by span name",
+          "title": "Requests Rate for $${service} by span name",
           "type": "timeseries"
         },
         {
@@ -1045,13 +1045,13 @@ data:
                   "type": "count"
                 }
               ],
-              "query": "search source=otel\n| where resource.service.name=\"${service}\"\n| stats count() by severity.text",
+              "query": "search source=otel\n| where resource.service.name=\"$${service}\"\n| stats count() by severity.text",
               "queryType": "PPL",
               "refId": "A",
               "timeField": "time"
             }
           ],
-          "title": "${service} Log entries by Severity",
+          "title": "$${service} Log entries by Severity",
           "type": "table"
         },
         {
@@ -1133,13 +1133,13 @@ data:
                   "type": "count"
                 }
               ],
-              "query": "search source=otel\n| where resource.service.name=\"${service}\"",
+              "query": "search source=otel\n| where resource.service.name=\"$${service}\"",
               "queryType": "PPL",
               "refId": "A",
               "timeField": "time"
             }
           ],
-          "title": "${service} Logs",
+          "title": "$${service} Logs",
           "type": "table"
         },
         {
@@ -1872,7 +1872,7 @@ data:
               "showLineNumbers": false,
               "showMiniMap": false
             },
-            "content": "## Opentelemetry Collector Data Ingress/Egress\n\n`service_version:` ${service_version}\n\n`opentelemetry collector:` contrib\n\n",
+            "content": "## Opentelemetry Collector Data Ingress/Egress\n\n`service_version:` $$${service_version}\n\n`opentelemetry collector:` contrib\n\n",
             "mode": "markdown"
           },
           "pluginVersion": "9.1.0",
@@ -4053,7 +4053,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_accepted_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($$${metric:value}(otelcol_receiver_accepted_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -4068,7 +4068,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_refused_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($$${metric:value}(otelcol_receiver_refused_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -4078,7 +4078,7 @@ data:
               "refId": "B"
             }
           ],
-          "title": "Spans ${metric:text}",
+          "title": "Spans $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -4192,7 +4192,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_accepted_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($${metric:value}(otelcol_receiver_accepted_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -4207,7 +4207,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_refused_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($${metric:value}(otelcol_receiver_refused_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -4217,7 +4217,7 @@ data:
               "refId": "B"
             }
           ],
-          "title": "Metric Points ${metric:text}",
+          "title": "Metric Points $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -4331,7 +4331,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_accepted_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($${metric:value}(otelcol_receiver_accepted_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -4346,7 +4346,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_receiver_refused_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+              "expr": "sum($${metric:value}(otelcol_receiver_refused_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -4356,7 +4356,7 @@ data:
               "refId": "B"
             }
           ],
-          "title": "Log Records ${metric:text}",
+          "title": "Log Records $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -4511,7 +4511,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_processor_batch_batch_send_size_count{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
+              "expr": "sum($${metric:value}(otelcol_processor_batch_batch_send_size_count{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4527,7 +4527,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_processor_batch_batch_send_size_sum{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
+              "expr": "sum($${metric:value}(otelcol_processor_batch_batch_send_size_sum{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4753,7 +4753,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_processor_batch_batch_size_trigger_send{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
+              "expr": "sum($${metric:value}(otelcol_processor_batch_batch_size_trigger_send{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4769,7 +4769,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_processor_batch_timeout_trigger_send{processor=~\"$processor\"}[$__rate_interval])) by (processor)",
+              "expr": "sum($${metric:value}(otelcol_processor_batch_timeout_trigger_send{processor=~\"$processor\"}[$__rate_interval])) by (processor)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4919,7 +4919,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_sent_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_sent_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -4934,7 +4934,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_enqueue_failed_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_enqueue_failed_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -4950,7 +4950,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_send_failed_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_send_failed_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -4960,7 +4960,7 @@ data:
               "refId": "C"
             }
           ],
-          "title": "Spans ${metric:text}",
+          "title": "Spans $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -5074,7 +5074,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_sent_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_sent_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -5089,7 +5089,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_enqueue_failed_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_enqueue_failed_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -5105,7 +5105,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_send_failed_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_send_failed_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -5115,7 +5115,7 @@ data:
               "refId": "C"
             }
           ],
-          "title": "Metric Points ${metric:text}",
+          "title": "Metric Points $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -5229,7 +5229,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_sent_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_sent_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "interval": "$minstep",
               "intervalFactor": 1,
@@ -5244,7 +5244,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_enqueue_failed_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_enqueue_failed_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -5260,7 +5260,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum(${metric:value}(otelcol_exporter_send_failed_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
+              "expr": "sum($${metric:value}(otelcol_exporter_send_failed_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])) by (exporter $grouping)",
               "format": "time_series",
               "hide": false,
               "interval": "$minstep",
@@ -5270,7 +5270,7 @@ data:
               "refId": "C"
             }
           ],
-          "title": "Log Records ${metric:text}",
+          "title": "Log Records $${metric:text}",
           "type": "timeseries"
         },
         {
@@ -6692,7 +6692,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum($${metric:value}(\n        otelcol_receiver_accepted_spans{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum($${metric:value}(\n        otelcol_exporter_sent_spans{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -6768,7 +6768,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_receiver_accepted_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver))\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_exporter_sent_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter))\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        $${metric:value}(otelcol_receiver_accepted_metric_points{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver))\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        $${metric:value}(otelcol_exporter_sent_metric_points{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter))\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -6844,7 +6844,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+              "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum($${metric:value}(\n        otelcol_receiver_accepted_log_records{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum($${metric:value}(\n        otelcol_exporter_sent_log_records{exporter=~\"$exporter\",job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -8018,7 +8018,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "topk(7, sum by (span_name,service_name)(increase(duration_milliseconds_sum{service_name=~\"${service}\", span_name=~\"$span_name\"}[5m]) / increase(duration_milliseconds_count{service_name=~\"${service}\",span_name=~\"$span_name\"}[5m\n])))",
+              "expr": "topk(7, sum by (span_name,service_name)(increase(duration_milliseconds_sum{service_name=~\"$${service}\", span_name=~\"$span_name\"}[5m]) / increase(duration_milliseconds_count{service_name=~\"$${service}\",span_name=~\"$span_name\"}[5m\n])))",
               "instant": true,
               "interval": "",
               "legendFormat": "{{span_name}} [{{service_name}}]",
@@ -10828,7 +10828,7 @@ data:
     @test "Test Health" {
       url="http://opentelemetry-demo-grafana/api/health"
 
-      code=$(wget --server-response --spider --timeout 90 --tries 10 ${url} 2>&1 | awk '/^  HTTP/{print $2}')
+      code=$(wget --server-response --spider --timeout 90 --tries 10 $${url} 2>&1 | awk '/^  HTTP/{print $2}')
       [ "$code" == "200" ]
     }
 ---

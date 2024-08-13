@@ -9,8 +9,10 @@ functions.http('ticketing', async (req, res) => {
             if(trace == null){
                 res.status(400).send("Trace data could not be found!");
             }
-            const preprocessedTrace = preprocess(trace);
-            const gptResponse = await sendMessage(preprocessedTrace);
+            const body = JSON.parse(req.body, null, 2);
+            res.status(200).send(JSON.stringify(body));
+            //const preprocessedTrace = preprocess(trace);
+            //const gptResponse = await sendMessage(preprocessedTrace);
 
             res.status(200).send(gptResponse)
         default:
