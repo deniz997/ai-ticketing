@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store
+  namespace: ai-documention
+  labels:
+    app.kubernetes.io/name: ai-documention
+    app.kubernetes.io/instance: store
+    app.kubernetes.io/version: "0.0.1"
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-documention
+      app.kubernetes.io/instance: store
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-documention
+        app.kubernetes.io/instance: store
+
+    spec:
+      containers:
+        - name: store
+          image: "mongo"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "root"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "example"
+          ports:
+            - name: default
+              containerPort: 27017
+              protocol: TCP

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: viewer
+  namespace: ai-documention
+  labels:
+    app.kubernetes.io/name: ai-documention
+    app.kubernetes.io/instance: viewer
+    app.kubernetes.io/version: "0.0.1"
+spec:
+  type: ClusterIP
+  ports:
+    - name: default
+      port: 8052
+      targetPort: 8052
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: ai-documention
+    app.kubernetes.io/instance: viewer
+  internalTrafficPolicy: Cluster

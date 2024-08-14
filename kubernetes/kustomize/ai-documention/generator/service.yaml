@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: generator
+  namespace: ai-documention
+  labels:
+    app.kubernetes.io/name: ai-documention
+    app.kubernetes.io/instance: generator
+    app.kubernetes.io/version: "0.0.1"
+spec:
+  type: ClusterIP
+  ports:
+    - name: default
+      port: 8051
+      targetPort: 8051
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: ai-documention
+    app.kubernetes.io/instance: generator
+  internalTrafficPolicy: Cluster
