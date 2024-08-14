@@ -1,0 +1,558 @@
+{
+  "id": "10.0.2.15:30001/000000007379.pcap-1",
+  "index": 1,
+  "stream": "000000007379.pcap",
+  "worker": "10.0.2.15:30001",
+  "node": {
+    "ip": "10.0.2.15",
+    "name": "minikube"
+  },
+  "protocol": {
+    "name": "http",
+    "version": "1.1",
+    "abbr": "HTTP",
+    "longName": "Hypertext Transfer Protocol -- HTTP/1.1",
+    "macro": "http",
+    "backgroundColor": "#416CDE",
+    "foregroundColor": "#ffffff",
+    "fontSize": 12,
+    "referenceLink": "https://datatracker.ietf.org/doc/html/rfc2616",
+    "ports": [
+      "80",
+      "443",
+      "8080"
+    ],
+    "layer4": "tcp",
+    "layer3": "ip",
+    "priority": 0
+  },
+  "tls": false,
+  "src": {
+    "ip": "10.244.0.4",
+    "port": "57428",
+    "name": "vote-bot-bbcc988b-7wl25",
+    "namespace": "emojivoto",
+    "pod": {
+      "metadata": {
+        "name": "vote-bot-bbcc988b-7wl25",
+        "generateName": "vote-bot-bbcc988b-",
+        "namespace": "emojivoto",
+        "uid": "fc1ef1b2-6b12-4fd2-bb66-d13241b7d7b1",
+        "resourceVersion": "508",
+        "creationTimestamp": "2024-08-07T18:41:38Z",
+        "labels": {
+          "app": "vote-bot",
+          "pod-template-hash": "bbcc988b",
+          "version": "v11"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "ReplicaSet",
+            "name": "vote-bot-bbcc988b",
+            "uid": "653cf144-fd47-4137-bb7f-17127ac8a138",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2024-08-07T18:41:38Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {},
+                  "f:version": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"653cf144-fd47-4137-bb7f-17127ac8a138\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:containers": {
+                  "k:{\"name\":\"vote-bot\"}": {
+                    "f:command": {},
+                    "f:env": {
+                      "k:{\"name\":\"WEB_HOST\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:value": {}
+                      },
+                      ".": {}
+                    },
+                    "f:name": {},
+                    ".": {},
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:resources": {
+                      ".": {},
+                      "f:requests": {
+                        ".": {},
+                        "f:cpu": {}
+                      }
+                    },
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {}
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {}
+              }
+            }
+          },
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2024-08-07T18:41:58Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:startTime": {},
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {},
+                    ".": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  "k:{\"ip\":\"10.244.0.4\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  },
+                  ".": {}
+                }
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-api-access-srs45",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "expirationSeconds": 3607,
+                    "path": "token"
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "vote-bot",
+            "image": "docker.l5d.io/buoyantio/emojivoto-web:v11",
+            "command": [
+              "emojivoto-vote-bot"
+            ],
+            "env": [
+              {
+                "name": "WEB_HOST",
+                "value": "web-svc.emojivoto:80"
+              }
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "kube-api-access-srs45",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "minikube",
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2024-08-07T18:41:38Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2024-08-07T18:41:58Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2024-08-07T18:41:58Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2024-08-07T18:41:38Z"
+          }
+        ],
+        "hostIP": "10.0.2.15",
+        "podIP": "10.244.0.4",
+        "podIPs": [
+          {
+            "ip": "10.244.0.4"
+          }
+        ],
+        "startTime": "2024-08-07T18:41:38Z",
+        "containerStatuses": [
+          {
+            "name": "vote-bot",
+            "state": {
+              "running": {
+                "startedAt": "2024-08-07T18:41:58Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker.l5d.io/buoyantio/emojivoto-web:v11",
+            "imageID": "docker-pullable://docker.l5d.io/buoyantio/emojivoto-web@sha256:d21f9fdb794f754b076344ce01c4858c499617c952cc6a941ac3cefbf5ccedfd",
+            "containerID": "docker://0fd124ebe576c33d4a409f0bde89a9c9a37063ae41028607a092144ce8cfe42c",
+            "started": true
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    "endpointSlice": null,
+    "service": null,
+    "resolutionMechanism": "ip"
+  },
+  "dst": {
+    "ip": "10.111.161.63",
+    "port": "80",
+    "name": "web-svc",
+    "namespace": "emojivoto",
+    "pod": null,
+    "endpointSlice": null,
+    "service": {
+      "metadata": {
+        "name": "web-svc",
+        "namespace": "emojivoto",
+        "uid": "2c3e5919-2d87-415c-9485-8b414dd3b41b",
+        "resourceVersion": "340",
+        "creationTimestamp": "2024-08-07T18:41:37Z",
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"web-svc\",\"namespace\":\"emojivoto\"},\"spec\":{\"ports\":[{\"name\":\"http\",\"port\":80,\"targetPort\":8080}],\"selector\":{\"app\":\"web-svc\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2024-08-07T18:41:37Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {},
+                  ".": {}
+                }
+              },
+              "f:spec": {
+                "f:type": {},
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":80,\"protocol\":\"TCP\"}": {
+                    "f:targetPort": {},
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "http",
+            "protocol": "TCP",
+            "port": 80,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "app": "web-svc"
+        },
+        "clusterIP": "10.111.161.63",
+        "clusterIPs": [
+          "10.111.161.63"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    "resolutionMechanism": "ip"
+  },
+  "outgoing": false,
+  "timestamp": 1723073769494,
+  "startTime": "2024-08-07T23:36:09.494044524Z",
+  "request": {
+    "method": "GET",
+    "url": "/api/vote?choice=:sun_behind_small_cloud:",
+    "httpVersion": "HTTP/1.1",
+    "cookies": {},
+    "headers": {
+      "Accept-Encoding": "gzip",
+      "Host": "web-svc.emojivoto:80",
+      "User-Agent": "Go-http-client/1.1",
+      "X-B3-Sampled": "1",
+      "X-B3-Spanid": "7c2c968d187a8edc",
+      "X-B3-Traceid": "7dda5a72f8b0bbfa3750d0cfb0dacfab"
+    },
+    "queryString": {
+      "choice": ":sun_behind_small_cloud:"
+    },
+    "headersSize": -1,
+    "bodySize": 0,
+    "path": "/api/vote",
+    "pathSegments": [
+      "api",
+      "vote"
+    ]
+  },
+  "response": {
+    "status": 200,
+    "statusText": "OK",
+    "httpVersion": "HTTP/1.1",
+    "cookies": {},
+    "headers": {
+      "Content-Length": "0",
+      "Date": "Wed, 07 Aug 2024 23:36:09 GMT"
+    },
+    "content": {
+      "size": 0,
+      "mimeType": "",
+      "encoding": "base64"
+    },
+    "redirectURL": "",
+    "headersSize": -1,
+    "bodySize": 0
+  },
+  "requestRef": "",
+  "responseRef": "",
+  "requestSize": 237,
+  "responseSize": 75,
+  "elapsedTime": 0,
+  "passed": false,
+  "failed": false,
+  "error": null,
+  "entryFile": "000000007379_pcap-1_entry.json",
+  "record": "",
+  "event": null,
+  "eventRef": "",
+  "base": {
+    "id": "10.0.2.15:30001/000000007379.pcap-1",
+    "stream": "000000007379.pcap",
+    "worker": "10.0.2.15:30001",
+    "proto": {
+      "name": "http",
+      "version": "1.1",
+      "abbr": "HTTP",
+      "longName": "Hypertext Transfer Protocol -- HTTP/1.1",
+      "macro": "http",
+      "backgroundColor": "#416CDE",
+      "foregroundColor": "#ffffff",
+      "fontSize": 12,
+      "referenceLink": "https://datatracker.ietf.org/doc/html/rfc2616",
+      "ports": [
+        "80",
+        "443",
+        "8080"
+      ],
+      "layer4": "tcp",
+      "layer3": "ip",
+      "priority": 0
+    },
+    "tls": false,
+    "summary": "/api/vote",
+    "summaryQuery": "request.path == \"/api/vote\"",
+    "status": 200,
+    "statusQuery": "response.status == 200",
+    "method": "GET",
+    "methodQuery": "request.method == \"GET\"",
+    "timestamp": 1723073769494,
+    "src": {
+      "ip": "10.244.0.4",
+      "port": "57428",
+      "name": "vote-bot-bbcc988b-7wl25",
+      "namespace": "emojivoto",
+      "pod": {
+        "metadata": {
+          "name": "vote-bot-bbcc988b-7wl25",
+          "namespace": "emojivoto"
+        },
+        "spec": {
+          "nodeName": "minikube"
+        },
+        "status": {
+          "hostIp": "10.0.2.15"
+        }
+      },
+      "endpointSlice": null,
+      "service": null,
+      "resolutionMechanism": "ip"
+    },
+    "dst": {
+      "ip": "10.111.161.63",
+      "port": "80",
+      "name": "web-svc",
+      "namespace": "emojivoto",
+      "pod": null,
+      "endpointSlice": null,
+      "service": {
+        "metadata": {
+          "name": "web-svc",
+          "namespace": "emojivoto"
+        }
+      },
+      "resolutionMechanism": "ip"
+    },
+    "outgoing": false,
+    "requestSize": 237,
+    "responseSize": 75,
+    "elapsedTime": 0,
+    "passed": false,
+    "failed": false,
+    "error": null,
+    "record": "",
+    "event": false,
+    "capture": {
+      "backend": "af_packet",
+      "source": "host-any"
+    },
+    "checksums": [
+      "74db096d577c4fe5c25eeee48bf029a2da989526e5b8f2dfca32d3e3b7e4f4ac",
+      "6de35e11e06830a56d7e321f62a8cd4447c2146fb7c648df6dbc9bf6df0ff8ff",
+      "78ad0562825c076e4225548b2fd9041192a818e4cf71e8b70bafdc9d3e8adcc1",
+      "ae27f8ca97541fae127a48c4de6ba08fd99a554ff564c7c377d67c344d2252c8"
+    ],
+    "duplicate": ""
+  },
+  "capture": {
+    "backend": "af_packet",
+    "source": "host-any"
+  },
+  "checksums": [
+    "74db096d577c4fe5c25eeee48bf029a2da989526e5b8f2dfca32d3e3b7e4f4ac",
+    "6de35e11e06830a56d7e321f62a8cd4447c2146fb7c648df6dbc9bf6df0ff8ff",
+    "78ad0562825c076e4225548b2fd9041192a818e4cf71e8b70bafdc9d3e8adcc1",
+    "ae27f8ca97541fae127a48c4de6ba08fd99a554ff564c7c377d67c344d2252c8"
+  ],
+  "duplicate": ""
+}
