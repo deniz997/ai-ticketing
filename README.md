@@ -8,7 +8,8 @@
 ### Minikube
 
 - [Install minikube](https://minikube.sigs.k8s.io/docs/start/)
-- Connect to the cluster and execute the following steps
+- Connect to the cluster
+  - or execute the following steps
 ```shell
 kubectl create namespace otel-demo
 kubectl apply --namespace otel-demo -f https://raw.githubusercontent.com/open-telemetry/opentelemetry-demo/main/kubernetes/opentelemetry-demo.yaml
@@ -25,7 +26,8 @@ Using terraform, follow the instructions in the found in [iac/aws/readme.md](./i
 ## Folder Structure
 
 - iac. Contains Infrastructure as Code for different cloud providers (GCP, AWS)
-- internal. Tools for sanity checks and other utilities
+- internal. Tools for sanity checks
+  - or other utilities
 - kubernetes. Contains a single file with all Kubernetes manifests to create the application
 - pb. Protocol Buffers demo files
 - src. Source code for each microservice
@@ -51,3 +53,20 @@ Using terraform, follow the instructions in the found in [iac/aws/readme.md](./i
     - [recommendationservice](./src/recommendationservice/README.md)
     - [shippingservice](./src/shippingservice/README.md)
 - test. Tracing testing. Documentation [here](./test/README.md)
+
+
+( (grpc and request.headers["Content-Type"] == "application/grpc") 
+  or (http and request.headers["Content-Type"] == "application/json") )
+and (src.pod.metadata.name.contains("accountingservice")      or dst.pod.metadata.name.contains("accountingservice")
+  or src.pod.metadata.name.contains("adservice")              or dst.pod.metadata.name.contains("adservice")
+  or src.pod.metadata.name.contains("cartservice")            or dst.pod.metadata.name.contains("cartservice")
+  or src.pod.metadata.name.contains("checkoutservice")        or dst.pod.metadata.name.contains("checkoutservice")
+  or src.pod.metadata.name.contains("currencyservice")        or dst.pod.metadata.name.contains("currencyservice")
+  or src.pod.metadata.name.contains("emailservice9")          or dst.pod.metadata.name.contains("emailservice9")
+  or src.pod.metadata.name.contains("frauddetectionservice")  or dst.pod.metadata.name.contains("frauddetectionservice")
+  or src.pod.metadata.name.contains("paymentservice")         or dst.pod.metadata.name.contains("paymentservice")
+  or src.pod.metadata.name.contains("productcatalogservice")  or dst.pod.metadata.name.contains("productcatalogservice")
+  or src.pod.metadata.name.contains("quoteservice")           or dst.pod.metadata.name.contains("quoteservice")
+  or src.pod.metadata.name.contains("recommendationservice")  or dst.pod.metadata.name.contains("recommendationservice")
+  or src.pod.metadata.name.contains("shippingservice")        or dst.pod.metadata.name.contains("shippingservice") )
+and dst.endpointSlice.metadata.name != "opentelemetry-demo-otelcol"
