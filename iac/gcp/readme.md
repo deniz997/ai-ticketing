@@ -47,7 +47,7 @@ Open telemetry steps
 
 1. Invoke script
 ```shell
-kubectl apply --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
+kubectl apply -k ../../kubernetes/kustomize
 ```
 
 #### Access to the microservices
