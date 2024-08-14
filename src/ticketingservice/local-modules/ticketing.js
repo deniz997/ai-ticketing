@@ -6,7 +6,11 @@ const notion = new Client({
 
 const NOTION_DB_ID = process.env.NOTION_DB_ID;
 
-module.exports.publishTicket = async function(ticket) {
+module.exports.publishTicket = async function(ticket, errorTime) {
+    const nowInMss = Date.now();
+    const errorInMss = Math.round(errorTime/1000000);
+    const duration = nowInMss - errorInMss;
+    const ticketContent = ticket + "\n\n**Duration of ticket generation** = " + (duration/1000).toString() + " seconds"
     try {
         const response = await notion.pages.create({
             parent: {database_id: NOTION_DB_ID},
@@ -30,7 +34,7 @@ module.exports.publishTicket = async function(ticket) {
                             {
                                 "type": "text",
                                 "text": {
-                                    "content": ticket,
+                                    "content": ticketContent,
                                 }
                             }
                         ]

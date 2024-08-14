@@ -11,11 +11,11 @@ functions.http('ticketing', async (req, res) => {
                 res.status(400).send("Trace data could not be found!");
                 return;
             }
-        
+            const errorTime = getErrorSpanEndTime(trace)
             const preprocessedTrace = preprocess(trace);
             try{
                 const gptResponse = await sendMessage(preprocessedTrace);
-                await publishTicket(gptResponse);
+                await publishTicket(gptResponse, errorTime);
             } catch (error) {
                 const errString = "Error: " + error.source + " - " + error.status + " - " + error.message; 
                 console.log(errString)
@@ -40,5 +40,18 @@ function handlePost(req, res) {
     return trace;
 }
 
+function getErrorSpanEndTime(traceData) {
+    let minEndUnixTime = undefined;
+    traceData.resourceSpans.forEach((resourceSpan) => {
+        resourceSpan.scopeSpans.forEach((scopeSpan) => {
+            scopeSpan.spans.forEach((span) => {
+                if (minEndUnixTime === undefined || span.endTimeUnixNano < minEndUnixTime) {
+                    minEndUnixTime = span.endTimeUnixNano
+                }
+            })
+        });
+    });
+    return minEndUnixTime;
+}
 
 
