@@ -1,8 +1,0 @@
-namespace: ai-documention
-
-resources:
-  - 0_global
-  - collector
-  - generator
-  - viewer
-  - store

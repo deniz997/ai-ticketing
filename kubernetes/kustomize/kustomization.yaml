@@ -1,6 +1,4 @@
 resources:
   - otel-demo-apps
   - otel-demo-config
-  - ai-documention
-  # Exclude observability resources due to number of nodes limitation for kubeshark (max 2 nodes free plan)
-  #- otel-demo-observability
+  - otel-demo-observability

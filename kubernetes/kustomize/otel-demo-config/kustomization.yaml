@@ -1,6 +1,5 @@
 namespace: otel-demo
 
 resources:
-  # Exclude feature flag resources due to number of nodes limitation for kubeshark (max 2 nodes free plan)
-  #- flagd
+  - flagd
   - loadgenerator
