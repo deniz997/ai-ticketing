@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: elb-service
+  namespace: otel-demo
 spec:
   selector:
     opentelemetry.io/name: opentelemetry-demo-frontendproxy
@@ -17,7 +18,7 @@ metadata:
   name: minimal-ingress
   namespace: otel-demo
   annotations:
-    kubernetes.io/ingress.class: "gce"
+    spec.ingressClassName: "gce"
 spec:
   rules:
     - http:
