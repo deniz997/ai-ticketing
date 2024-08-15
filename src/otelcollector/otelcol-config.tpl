@@ -12,7 +12,7 @@ receivers:
             - "https://*"
   httpcheck/frontendproxy:
     targets:
-      - endpoint: http://frontendproxy:${env:ENVOY_PORT}
+      - endpoint: http://frontendproxy:$${env:ENVOY_PORT}
   redis:
     endpoint: "redis-cart:6379"
     collection_interval: 10s
@@ -34,7 +34,7 @@ exporters:
       tls:
         insecure: true
   otlphttp/express:
-    endpoint: "http://express-server:3333"
+    endpoint: ${ai_ticketing_endpoint}
     encoding: json
     tls:
       insecure: true

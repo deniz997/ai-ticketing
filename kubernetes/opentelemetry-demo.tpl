@@ -282,7 +282,7 @@ data:
         tls:
           insecure: true
       otlphttp/ai_ticketing:
-        endpoint: ${ai_ticketing}
+        endpoint: ${ai_ticketing_endpoint}
         encoding: json
         tls:
           insecure: true
@@ -488,6 +488,15 @@ data:
     {
       "$schema": "https://flagd.dev/schema/v0/flags.json",
       "flags": {
+        "productCatalogPriceFailure": {
+          "description": "Fail product catalog service on a specific product's price",
+          "state": "ENABLED",
+          "variants": {
+              "on": true,
+              "off": false
+          },
+          "defaultVariant": "off"
+        },
         "productCatalogFailure": {
           "description": "Fail product catalog service on a specific product",
           "state": "ENABLED",
@@ -495,7 +504,7 @@ data:
             "on": true,
             "off": false
           },
-          "defaultVariant": "on"
+          "defaultVariant": "off"
         },
         "recommendationServiceCacheFailure": {
           "description": "Fail recommendation service cache",
@@ -9930,7 +9939,6 @@ spec:
           - start
           - --uri
           - file:./etc/flagd/demo.flagd.json
-          ${experiment_flags}
           ports:
           
           - containerPort: 8013
@@ -10512,7 +10520,7 @@ spec:
       serviceAccountName: opentelemetry-demo
       containers:
         - name: productcatalogservice
-          image: 'deniztecimer/productcatalogservice:latest'
+          image: 'deniztecimer/productcatalogservice:stable'
           imagePullPolicy: Always
           ports:
           

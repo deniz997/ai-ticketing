@@ -57,13 +57,3 @@ variable "notion_db_id" {
     nullable = false
     default = "179f83708c30426d92afddaa157d3503"
 }
-
-variable "experiment_flagd_source" {
-    type = string
-    default = "experiment_flags.json"
-}
-
-variable "isExperimentMode" {
-    type = bool
-    default = false
-}

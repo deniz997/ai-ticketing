@@ -586,8 +586,7 @@ services:
     command: [
       "start",
       "--uri",
-      "file:./etc/flagd/demo.flagd.json",
-      ${experiment_flags_uri}
+      "file:./etc/flagd/demo.flagd.json"
     ]
     ports:
       - 8013

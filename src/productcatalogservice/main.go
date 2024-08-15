@@ -251,10 +251,10 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
 
 	// GetProduct will fail on a specific product when feature flag is enabled
 	if p.checkProductFailure(ctx, req.Id) {
-		msg := fmt.Sprintf("Error: ProductCatalogService Fail Feature Flag Enabled")
+		msg := fmt.Sprintf("Error: ProductCatalogService Fail Not Found")
 		span.SetStatus(otelcodes.Error, msg)
 		span.AddEvent(msg)
-		return nil, status.Errorf(codes.Internal, msg)
+		return nil, status.Errorf(codes.NotFound, msg)
 	}
 
 	var found *pb.Product
@@ -277,11 +277,6 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
 	span.SetAttributes(
 		attribute.String("app.product.name", found.Name),
 	)
-
-	// GetProduct will fail on a specific product when feature flag is enabled
-	if p.checkProductPriceFailure(ctx, req.Id) {
-		found.PriceUsd = nil //Set found.price = nil for NullPointerException
-	}
 
 	return found, nil 
 }
@@ -310,18 +305,6 @@ func (p *productCatalog) checkProductFailure(ctx context.Context, id string) boo
 	client := openfeature.NewClient("productCatalog")
 	failureEnabled, _ := client.BooleanValue(
 		ctx, "productCatalogFailure", false, openfeature.EvaluationContext{},
-	)
-	return failureEnabled
-}
-
-func (p *productCatalog) checkProductPriceFailure(ctx context.Context, id string) bool {
-	if id != "66VCHSJNUP" {
-		return false
-	}
-	openfeature.AddHooks(otelhooks.NewTracesHook())
-	client := openfeature.NewClient("productCatalog")
-	failureEnabled, _ := client.BooleanValue(
-		ctx, "productCatalogPriceFailure", false, openfeature.EvaluationContext{},
 	)
 	return failureEnabled
 }

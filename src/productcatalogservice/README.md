@@ -52,3 +52,4 @@ docker login git.tu-berlin.de:5000
 docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/productcatalogservice:original -f ./src/productcatalogservice/Dockerfile .
 docker push git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/productcatalogservice:original
 ```
+docker build --platform linux/amd64 -t deniztecimer/productcatalogservice:stable -f ./src/productcatalogservice/Dockerfile .
