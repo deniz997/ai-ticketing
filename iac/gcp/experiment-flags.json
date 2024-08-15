@@ -1,0 +1,14 @@
+{
+  "$schema": "https://flagd.dev/schema/v0/flags.json",
+  "flags": {
+    "productCatalogPriceFailure": {
+    "description": "Fail product catalog service on a specific product's price",
+    "state": "ENABLED",
+    "variants": {
+        "on": true,
+        "off": false
+    },
+    "defaultVariant": "on"
+    }
+  }
+}

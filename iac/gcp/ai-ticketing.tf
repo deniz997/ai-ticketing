@@ -90,7 +90,7 @@ resource "google_secret_manager_secret" "openaikey" {
   }
 }
 
-resource "google_secret_manager_secret_version" "secret" {
+resource "google_secret_manager_secret_version" "openaikey_version" {
   secret = google_secret_manager_secret.openaikey.name
 
   secret_data = var.openai_key
@@ -105,7 +105,7 @@ resource "google_secret_manager_secret" "notionapikey" {
   }
 }
 
-resource "google_secret_manager_secret_version" "secret" {
+resource "google_secret_manager_secret_version" "notionapikey_version" {
   secret = google_secret_manager_secret.notionapikey.name
 
   secret_data = var.notion_apikey
@@ -116,7 +116,49 @@ output "function_uri" {
   value = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri
 }
 
-resource "local_file" "otel_configmap_template" {
-  content  = templatefile("../../kubernetes/opentelemetry-demo.tpl", { ai_ticketing_endpoint = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri })
+resource "local_file" "function_uri_injector" {
+  content  = templatefile("../../kubernetes/opentelemetry-demo.tpl", 
+    { 
+      ai_ticketing_endpoint = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri,
+      experiment_flags = <<EOT
+- --uri
+          - ${google_storage_bucket_object.experiment_flag_file[0].media_link}
+          EOT
+    })
   filename = "../../kubernetes/opentelemetry-demo.yaml"
+}
+
+resource "google_storage_bucket_iam_member" "member" {
+  provider = google
+  bucket   = google_storage_bucket.experiment_bucket[0].name
+  role     = "roles/storage.objectViewer"
+  member   = "allUsers"
+}
+
+resource "google_storage_bucket" "experiment_bucket" {
+  count = var.isExperimentMode ? 1 : 0
+  name                        = "${var.project_id}-experiment" # Every bucket name must be globally unique
+  location                    = var.region
+  uniform_bucket_level_access = true
+}
+
+resource "google_storage_bucket_object" "experiment_flag_file" {
+ count = var.isExperimentMode ? 1 : 0
+ name         = var.experiment_flagd_source
+ source       = "experiment-flags.json"
+ content_type = "text/json"
+ bucket       = google_storage_bucket.experiment_bucket[0].id
+}
+
+output "experiment_flag_uri" {
+  value = google_storage_bucket_object.experiment_flag_file[0].media_link
+}
+
+resource "local_file" "docker-compose-template" {
+  content  = templatefile("../../docker-compose.tpl", { experiment_flags_uri = <<EOT
+"--uri",
+      "${google_storage_bucket_object.experiment_flag_file[0].media_link}"
+      EOT
+})
+  filename = "../../docker-compose.yml"
 }

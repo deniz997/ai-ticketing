@@ -83,3 +83,26 @@ terraform destroy
 - otel-demo-apps
 - otel-demo-observability
 - otel-demo-load
+
+## To deploy updated images with experiment feature flags
+
+Build them via cloudbuild
+
+```shell
+gcloud builds submit --config cloudbuild.yaml .
+```
+
+### Make images publicly available
+
+Adjust the repository name
+
+```shell
+gcloud artifacts repositories add-iam-policy-binding cnae24 \
+--location=$(terraform output -raw region) --member=allUsers --role=roles/artifactregistry.reader
+```
+
+gcloud artifacts repositories create cnae24-remote \
+    --repository-format=docker \
+    --mode=remote-repository \
+    --remote-docker-repo=docker-hub \
+    --location=$(terraform output -raw region)

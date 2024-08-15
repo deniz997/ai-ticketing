@@ -2,3 +2,4 @@ openai_key = "sk-proj-9JxCbxrnRUcIMraGlv8xgeAptlLh_qegJ2CHYwpoYrEKmv2Yd9zRlouF4j
 project_id = "cnae-open-telemetrics-deniz"
 notion_apikey = "secret_SVDk88Ij9CaG18YboWXMBl8SbDMhNhcwVs5dB6L7BsP"
 notion_db_id = "179f83708c30426d92afddaa157d3503"
+isExperimentMode = true

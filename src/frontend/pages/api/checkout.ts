@@ -25,7 +25,7 @@ const handler = async ({ method, body, query }: NextApiRequest, res: NextApiResp
             cost,
             item: {
               productId,
-              quantity,
+              quantity, //Send quantity as string instead of num
               product,
             },
           };
