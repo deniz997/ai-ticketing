@@ -1,30 +1,15 @@
-# OpenTelemetry Demo - Astronomy Shop
+# Approach 2 - Automated API Documentation
 
-- [Official documentation](https://opentelemetry.io/docs/demo/)
-- [Original readme](./original_readme.md)
+This project is a fork from the baseline repository OpenTelemetry Demo.
+It contains the changes to execute the approach to AI ticket generation via OpenAI Chat Completion API and publish it to a Notion database.
 
 ## Quick start
 
-### Minikube
-
-- [Install minikube](https://minikube.sigs.k8s.io/docs/start/)
-- Connect to the cluster and execute the following steps
-```shell
-kubectl create namespace otel-demo
-kubectl apply --namespace otel-demo -f https://raw.githubusercontent.com/open-telemetry/opentelemetry-demo/main/kubernetes/opentelemetry-demo.yaml
-```
-
-### Google Cloud - GCP
-
-Using terraform, follow the instructions in the found in [iac/gcp/readme.md](./iac/gcp/readme.md)
-
-### AWS
-
-Using terraform, follow the instructions in the found in [iac/aws/readme.md](./iac/aws/readme.md)
+Follow the instructions in the [REPRODUCTION.md](REPRODUCTION.md) file.
 
 ## Folder Structure
 
-- iac. Contains Infrastructure as Code for different cloud providers (GCP, AWS)
+- iac. Contains Infrastructure as Code for different cloud providers (GCP, AWS) Only GCP is supported.
 - internal. Tools for sanity checks and other utilities
 - kubernetes. Contains a single file with all Kubernetes manifests to create the application
 - pb. Protocol Buffers demo files
@@ -50,4 +35,5 @@ Using terraform, follow the instructions in the found in [iac/aws/readme.md](./i
     - [quoteservice](./src/quoteservice/README.md)
     - [recommendationservice](./src/recommendationservice/README.md)
     - [shippingservice](./src/shippingservice/README.md)
-- test. Tracing testing. Documentation [here](./test/README.md)
+    - [ticketingservice](./src/ticketingservice/README.md)
+- mttd. Mean time to detect evaluation
