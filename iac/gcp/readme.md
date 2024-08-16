@@ -92,15 +92,6 @@ To forward with the Google cloud load balancer run:
 kubectl apply -f ingress.yaml
 ```
 
-## Modify feature flags
-
-1. Find `demo.flagd.json` field of the `ConfigMap` named `opentelemetry-demo-flagd-config`
-2. Adjust the flag you wish to enable by setting its `defaultVariant` field to `on`
-3. Apply new configuration
-    ```shell
-    kubectl apply --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
-    ```
-
 ## Destroy
 
 In order to destroy:
@@ -110,11 +101,3 @@ kubectl delete -f ingress.yaml
 kubectl delete --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
 terraform destroy --var-file .tfvars
 ```
-
-## Possible Problems
-
-- If you face the problem that Google Cloud can not access to the docker images stored in DockerHub, try [authentication helper for Docker](https://cloud.google.com/artifact-registry/docs/docker/authentication).
-
-    ```shell
-    gcloud auth configure-docker
-    ```

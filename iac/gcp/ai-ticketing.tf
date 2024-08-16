@@ -121,11 +121,6 @@ resource "local_file" "function_uri_injector" {
   filename = "../../kubernetes/opentelemetry-demo.yaml"
 }
 
-resource "local_file" "docker-compose-template" {
-  content  = templatefile("../../docker-compose.tpl", { ai_ticketing_endpoint = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri })
-  filename = "../../docker-compose.yml"
-}
-
 resource "local_file" "otelcollector-config" {
   content  = templatefile("../../src/otelcollector/otelcol-config.tpl", { ai_ticketing_endpoint = google_cloudfunctions2_function.ai-ticketing.service_config[0].uri })
   filename = "../../src/otelcollector/otelcol-config.yml"
