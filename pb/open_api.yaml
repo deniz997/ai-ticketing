@@ -1,0 +1,514 @@
+openapi: 3.0.1
+info:
+  title: Opentelemetry Demo - Astronomy Store
+  version: v0.1
+servers:
+  - url: /
+tags:
+  - name: adservice
+  - name: cartservice
+  - name: checkoutservice
+  - name: currencyservice
+  - name: emailservice
+  - name: paymentservice
+  - name: productcatalogservice
+  - name: quoteservice
+  - name: recommendationservice
+  - name: shippingservice
+paths:
+  # adservice
+  /api/ads:
+    post:
+      description: "grpc: GetAds(AdRequest) returns (AdResponse)"
+      tags:
+        - adservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/AdRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdResponse'
+  # cartservice
+  /api/cart:
+    post:
+      description: "grpc: AddItem(AddItemRequest) returns (Empty)"
+      tags:
+        - cartservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/AddItemRequest'
+      responses:
+        "204":
+          description: ""
+  /api/cart/{user_id}:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: "grpc: GetCart(GetCartRequest) returns (Cart)"
+      tags:
+        - cartservice
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+    delete:
+      description: "grpc: EmptyCart(EmptyCartRequest) returns (Empty)"
+      tags:
+        - cartservice
+      responses:
+        "204":
+          description: ""
+  # checkoutservice
+  /api/checkout:
+    post:
+      description: "grpc: PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse)"
+      tags:
+        - checkoutservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/PlaceOrderRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceOrderResponse'
+  # currencyservice
+  /api/currency:
+    get:
+      description: "grpc: GetSupportedCurrencies(Empty) returns (GetSupportedCurrenciesResponse)"
+      tags:
+        - currencyservice
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSupportedCurrenciesResponse'
+    post:
+      description: "grpc: Convert(ConversionRequest) returns (Money)"
+      tags:
+        - currencyservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CurrencyConversionRequest'
+      responses:
+        "204":
+          description: ""
+  # emailservice
+  /send_order_confirmation:
+    post:
+      description: "rest-api. Not implemented grpc: SendOrderConfirmation(SendOrderConfirmationRequest) returns (Empty)"
+      tags:
+        - emailservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/SendOrderConfirmationRequest'
+      responses:
+        "200":
+          description: ""
+  # paymentservice
+  /api/payment:
+    post:
+      description: "grpc: Charge(ChargeRequest) returns (ChargeResponse)"
+      tags:
+        - paymentservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ChargeRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargeResponse'
+  # productcatalogservice
+  /api/products:
+    get:
+      description: "grpc: ListProducts(Empty) returns (ListProductsResponse)"
+      tags:
+        - productcatalogservice
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProductsResponse'
+    post:
+      description: "grpc: SearchProducts(SearchProductsRequest) returns (SearchProductsResponse)"
+      tags:
+        - productcatalogservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/SearchProductsRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProductsResponse'
+  /api/products/{id}:
+    get:
+      description: "grpc: GetProduct(GetProductRequest) returns (Product)"
+      tags:
+        - productcatalogservice
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  # quoteservice
+  /getquote:
+    post:
+      description: "rest-api."
+      tags:
+        - quoteservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CalculateQuoteRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculateQuoteResponse'
+  # recommendationservice
+  /api/recommendations/{user_id}:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: "grpc: ListRecommendations(ListRecommendationsRequest) returns (ListRecommendationsResponse)"
+      tags:
+        - recommendationservice
+      parameters:
+        - name: product_ids
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRecommendationsResponse'
+  # shippingservice
+  /api/shipping/quote:
+    post:
+      description: "grpc: GetQuote(GetQuoteRequest) returns (GetQuoteResponse)"
+      tags:
+        - shippingservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/GetQuoteRequest'
+      responses:
+        "204":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetQuoteResponse'
+  /api/shipping/order:
+    post:
+      description: "grpc: ShipOrder(ShipOrderRequest) returns (ShipOrderResponse)"
+      tags:
+        - shippingservice
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ShipOrderRequest'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipOrderResponse'
+components:
+  schemas:
+    # adservice
+    AdRequest:
+      type: object
+      properties:
+        context_keys:
+          type: array
+          items:
+            type: string
+    AdResponse:
+      type: object
+      properties:
+        ads:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ad'
+    Ad:
+      type: object
+      properties:
+        redirect_url:
+          type: string
+        text:
+          type: string
+    # cartservice
+    AddItemRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        item:
+          $ref: '#/components/schemas/CartItem'
+    CartItem:
+      type: object
+      properties:
+        product_id:
+          type: string
+        quantity:
+          type: integer
+    Cart:
+      type: object
+      properties:
+        user_id:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+    # checkoutservice
+    PlaceOrderRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        user_currency:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        email:
+          type: string
+        credit_card:
+          $ref: '#/components/schemas/CreditCardInfo'
+    PlaceOrderResponse:
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/OrderResult'
+    # currencyservice
+    GetSupportedCurrenciesResponse:
+      type: object
+      properties:
+        currency_codes:
+          type: array
+          items:
+            type: string
+    CurrencyConversionRequest:
+      type: object
+      properties:
+        from:
+          $ref: '#/components/schemas/Money'
+        to_code:
+          type: string
+    # emailservice
+    SendOrderConfirmationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        order:
+          $ref: '#/components/schemas/OrderResult'
+    # paymentservice
+    ChargeRequest:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Money'
+        credit_card:
+          $ref: '#/components/schemas/CreditCardInfo'
+    ChargeResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+    # productcatalogservice
+    ListProductsResponse:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        picture:
+          type: string
+        price:
+          $ref: '#/components/schemas/Money'
+    SearchProductsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    SearchProductsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    # quoteservice
+    CalculateQuoteRequest:
+      type: object
+      properties:
+        numberOfItems:
+          type: integer
+    CalculateQuoteResponse:
+      type: number
+    # recommendationservice
+    ListRecommendationsResponse:
+      type: object
+      properties:
+        product_ids:
+          type: array
+          items:
+            type: string
+    # shippingservice
+    GetQuoteRequest:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+    GetQuoteResponse:
+      type: object
+      properties:
+        cost_usd:
+          $ref: '#/components/schemas/Money'
+    ShipOrderRequest:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+    ShipOrderResponse:
+      type: object
+      properties:
+        tracking_id:
+          type: string
+    # common
+    Address:
+      type: object
+      properties:
+        street_address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zip_code:
+          type: string
+    CreditCardInfo:
+      type: object
+      properties:
+        credit_card_number:
+          type: string
+        credit_card_cvv:
+          type: integer
+        credit_card_expiration_year:
+          type: integer
+        credit_card_expiration_month:
+          type: integer
+    OrderResult:
+      type: object
+      properties:
+        order_id:
+          type: string
+        shipping_tracking_id:
+          type: string
+        shipping_cost:
+          $ref: '#/components/schemas/Money'
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Money:
+      type: object
+      properties:
+        currency_code:
+          type: string
+        units:
+          type: integer
+        nanos:
+          type: integer
+    OrderItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/CartItem'
+        cost:
+          $ref: '#/components/schemas/Money'
