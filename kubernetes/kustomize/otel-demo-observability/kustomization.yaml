@@ -1,9 +1,0 @@
-namespace: otel-demo
-
-resources:
-  - collector
-  - grafana
-  - grafana-test
-  - jaeger
-  - opensearch
-  - prometheus

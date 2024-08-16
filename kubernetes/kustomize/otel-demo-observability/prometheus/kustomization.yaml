@@ -1,7 +1,0 @@
-resources:
-  - ClusterRoleBinding.yaml
-  - ClusterRole.yaml
-  - deployment.yaml
-  - config.yaml
-  - ServiceAccount.yaml
-  - service.yaml
