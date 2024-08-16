@@ -9,33 +9,34 @@ To reproduce the AI-Driven Ticket Generation, follow the steps below.
 1. Set up envrionment to access required external services (OpenAI API, Notion API)
 2. Create infrastructure (locally with minikube, GCP - google cloud)
 3. Configure kubernetes services (opentelemetry demo)
-4. Set up environment
-5. Execute tests
-6. Destroy infrastructure
+4. Execute tests
+5. Destroy infrastructure
+6. Quantitative Evaluation
 
 ## Step 1. Set up envrionment to access required external services
 
-Set required variables in a `.tfvars` file under `iac/gcp`. 
-    List of required variables:
-    - openai_key:
-        1. Login to your OpenAI developer account
-        2. Go to [api key page](https://platform.openai.com/api-keys) to create one if you do not have one already
-    - project_id:
-        1. Use the project id from 'Cloud Version: Google Cloud - GCP' section
-    - notion_apikey:
-        1. Go to your notion account and create a workspace
-        2. Add an internal integration as described [here](https://www.notion.so/help/create-integrations-with-the-notion-api)
-        3. Use the secret api key shown after creation
-    - notion_db_id:
-        1. Create an empty database as shown [here](https://www.notion.so/help/guides/creating-a-database)
-        2. Make sure your database page is connected to the internal integration. [Here is how?](https://www.notion.so/help/add-and-manage-connections-with-the-api#add-connections-to-pages)
-        3. Use the {database_id} part of your database link which is formatted as follows:
-            `https://www.notion.so/{database_id}?v={variable}` 
-        4. Make sure you have the following properties on your database:
-            - Name (type: Title)
-            - Duration (sec) (type: Number with commas)
-    - model_type (optional):
-        1. The default is set to "gpt-4o-mini". If you want to use another model from OpenAI Chat Completion API you can set it here. You can access the list of models [here](https://platform.openai.com/docs/models/gpt-4o-mini).
+Set required variables in a `.tfvars` file under `iac/gcp`.
+
+List of required variables:
+- openai_key:
+    1. Login to your OpenAI developer account
+    2. Go to [api key page](https://platform.openai.com/api-keys) to create one if you do not have one already
+- project_id:
+    1. Use the project id from 'Cloud Version: Google Cloud - GCP' section
+- notion_apikey:
+    1. Go to your notion account and create a workspace
+    2. Add an internal integration as described [here](https://www.notion.so/help/create-integrations-with-the-notion-api)
+    3. Use the secret api key shown after creation
+- notion_db_id:
+    1. Create an empty database as shown [here](https://www.notion.so/help/guides/creating-a-database)
+    2. Make sure your database page is connected to the internal integration. [Here is how?](https://www.notion.so/help/add-and-manage-connections-with-the-api#add-connections-to-pages)
+    3. Use the {database_id} part of your database link which is formatted as follows:
+        `https://www.notion.so/{database_id}?v={variable}` 
+    4. Make sure you have the following properties on your database:
+        - Name (type: Title)
+        - Duration (sec) (type: Number with commas)
+- model_type (optional):
+    1. The default is set to "gpt-4o-mini". If you want to use another model from OpenAI Chat Completion API you can set it here. You can access the list of models [here](https://platform.openai.com/docs/models/gpt-4o-mini).
 
 ## Step 2. Create Infrastructure
 
@@ -65,6 +66,7 @@ npm test
     2. Replace all `$${` with `${`
 
 **Minikube**
+
 Requirements
 
 - [Install minikube](https://minikube.sigs.k8s.io/docs/start/)
@@ -116,6 +118,7 @@ LAST SEEN   TYPE     REASON                    OBJECT          MESSAGE
 ### Cloud Version
 
 **Google Cloud - GCP**
+
 Requirements
 
 - [Google Cloud Platform (GCP) Account](https://cloud.google.com/)
@@ -175,7 +178,7 @@ kubectl apply --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
 ```
 Wait until all the pods are running in the namespaces "otel-demo".
 
-## Step 5. Execute tests
+## Step 4. Execute tests
 
 Start generating tickets and publishing them to Notion.
 
@@ -194,7 +197,7 @@ This flag causes "Error: ProductCatalogService Fail Not Found" log to be added i
     ```
 Note. It may take some time for the configuration to be updated.
 
-#### Access to the microservices
+### Access to the microservices
 
 **Alternative 1**
 
@@ -220,7 +223,7 @@ Send a request to the following endpoints:
 
 You can view the generated tickets in the Notion database.
 
-## Step 6. Destroy infrastructure
+## Step 5. Destroy infrastructure
 
 In order to destroy:
 Note. Assuming that you current location is `iac/gcp`
@@ -247,7 +250,7 @@ In case of using minikube, stop the cluster
 minikube delete --all
 ```
 
-## Step 7. Quantitative Evaluation
+## Step 6. Quantitative Evaluation
 
 In this project we evaluate the meantime between the time that the error occured and the ticket published to a ticketing system. You can find more information in `README.md` located in `mttd` folder.
 
