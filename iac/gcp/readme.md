@@ -34,24 +34,24 @@ gcloud components install gke-gcloud-auth-plugin
 8. Set required variables in a `.tfvars` file. 
     List of required variables:
     - openai_key:
-        - Login to your OpenAI developer account
-        - Go to [api key page](https://platform.openai.com/api-keys) to create one if you do not have one already
+        1. Login to your OpenAI developer account
+        2. Go to [api key page](https://platform.openai.com/api-keys) to create one if you do not have one already
     - project_id:
-        - Use the project name from step 1
+        1. Use the project name from step 1
     - notion_apikey:
-        - Go to your notion account and create a workspace
-        - Add an internal integration as described [here](https://www.notion.so/help/create-integrations-with-the-notion-api)
-        - Use the secret api key shown after creation
+        1. Go to your notion account and create a workspace
+        2. Add an internal integration as described [here](https://www.notion.so/help/create-integrations-with-the-notion-api)
+        3. Use the secret api key shown after creation
     - notion_db_id:
-        - Create an empty database as shown [here](https://www.notion.so/help/guides/creating-a-database)
-        - Make sure your database page is connected to the internal integration. [Here is how?](https://www.notion.so/help/add-and-manage-connections-with-the-api#add-connections-to-pages)
-        - Use the {database_id} part of your database link which is formatted as follows:
+        1. Create an empty database as shown [here](https://www.notion.so/help/guides/creating-a-database)
+        2. Make sure your database page is connected to the internal integration. [Here is how?](https://www.notion.so/help/add-and-manage-connections-with-the-api#add-connections-to-pages)
+        3. Use the {database_id} part of your database link which is formatted as follows:
             `https://www.notion.so/{database_id}?v={variable}` 
-        - Make sure you have the following properties on your database:
+        4. Make sure you have the following properties on your database:
             - Name (type: Title)
             - Duration (sec) (type: Number with commas)
     - model_type (optional):
-        - The default is set to "gpt-4o-mini". If you want to use another model from OpenAI Chat Completion API you can set it here. You can access the list of models [here](https://platform.openai.com/docs/models/gpt-4o-mini).
+        1. The default is set to "gpt-4o-mini". If you want to use another model from OpenAI Chat Completion API you can set it here. You can access the list of models [here](https://platform.openai.com/docs/models/gpt-4o-mini).
 
 9. Execute terraform
 ```shell
@@ -111,8 +111,10 @@ kubectl delete --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
 terraform destroy --var-file .tfvars
 ```
 
--- refactor
-3 namespaces: 
-- otel-demo-apps
-- otel-demo-observability
-- otel-demo-load
+## Possible Problems
+
+- If you face the problem that Google Cloud can not access to the docker images stored in DockerHub, try [authentication helper for Docker](https://cloud.google.com/artifact-registry/docs/docker/authentication).
+
+    ```shell
+    gcloud auth configure-docker
+    ```
