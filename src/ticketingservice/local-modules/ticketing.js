@@ -23,6 +23,9 @@ module.exports.publishTicket = async function(ticket, errorTime) {
                             }
                         }
                     ]
+                },
+                "Duration (sec)": {
+                    "number": duration/1000
                 }
             },
             children: [

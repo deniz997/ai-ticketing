@@ -18,6 +18,9 @@ python -m grpc_tools.protoc -I=../pb/ --python_out=./ --grpc_python_out=./ ../pb
 From the root directory, run:
 
 **GitLab container registry:**
+
+If you want to use `google_container_node_pool` with machine type `e2-medium`, you may need to build your image with `--platform linux/amd64` argument.
+
 ```sh
 docker login git.tu-berlin.de:5000
 docker build -t git.tu-berlin.de:5000/cnae_ss_2024/opentelemetry-demo/recommendationservice:original -f ./src/recommendationservice/Dockerfile .

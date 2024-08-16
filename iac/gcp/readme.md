@@ -31,12 +31,36 @@ gcloud auth application-default login
 ```shell
 gcloud components install gke-gcloud-auth-plugin
 ```
-8. Execute terraform
+8. Set required variables in a `.tfvars` file. 
+    List of required variables:
+    - openai_key:
+        - Login to your OpenAI developer account
+        - Go to [api key page](https://platform.openai.com/api-keys) to create one if you do not have one already
+    - project_id:
+        - Use the project name from step 1
+    - notion_apikey:
+        - Go to your notion account and create a workspace
+        - Add an internal integration as described [here](https://www.notion.so/help/create-integrations-with-the-notion-api)
+        - Use the secret api key shown after creation
+    - notion_db_id:
+        - Create an empty database as shown [here](https://www.notion.so/help/guides/creating-a-database)
+        - Make sure your database page is connected to the internal integration. [Here is how?](https://www.notion.so/help/add-and-manage-connections-with-the-api#add-connections-to-pages)
+        - Use the {database_id} part of your database link which is formatted as follows:
+            `https://www.notion.so/{database_id}?v={variable}` 
+        - Make sure you have the following properties on your database:
+            - Name (type: Title)
+            - Duration (sec) (type: Number with commas)
+    - model_type (optional):
+        - The default is set to "gpt-4o-mini". If you want to use another model from OpenAI Chat Completion API you can set it here. You can access the list of models [here](https://platform.openai.com/docs/models/gpt-4o-mini).
+
+9. Execute terraform
 ```shell
 terraform init
-terraform apply
+terraform apply --var-file .tfvars
 ```
-8. Connect to the kubernetes cluster already created
+Terraform will create the `../../kubernetes/opentelemetry-demo.yaml` file from `../../kubernetes/opentelemetry-demo.tpl` with configurations such as the cloud function url.
+
+10. Connect to the kubernetes cluster already created
 ```shell
 gcloud container clusters get-credentials gke-cnae-cluster --region $(terraform output -raw region) --project $(terraform output -raw project_id)
 ```
@@ -67,6 +91,15 @@ To forward with the Google cloud load balancer run:
 ```shell
 kubectl apply -f ingress.yaml
 ```
+
+## Modify feature flags
+
+1. Find `demo.flagd.json` field of the `ConfigMap` named `opentelemetry-demo-flagd-config`
+2. Adjust the flag you wish to enable by setting its `defaultVariant` field to `on`
+3. Apply new configuration
+    ```shell
+    kubectl apply --namespace otel-demo -f ../../kubernetes/opentelemetry-demo.yaml
+    ```
 
 ## Destroy
 
