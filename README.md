@@ -3,7 +3,7 @@ For more details please refer to [the project report](https://github.com/deniz99
 
 Note: All the keys and tokens used in this project have been deactivated and are used as placeholders.
 
-# Approach 2 - Automated API Documentation
+# Approach 1 - AI-driven Ticket Generation 
 
 This project is a fork from the baseline repository OpenTelemetry Demo.
 It contains the changes to execute the approach to AI ticket generation via OpenAI Chat Completion API and publish it to a Notion database.
