@@ -1,5 +1,6 @@
 # This project was developed as a part of the project for the Cloud Native Architecture & Engineering course at the TU Berlin SS24.
 For more details please refer to [the project report](https://github.com/deniz997/ai-ticketing/blob/main/cloud_native__group_10_Final_Report.pdf).
+
 Note: All the keys and tokens used in this project have been deactivated and are used as placeholders.
 
 # Approach 2 - Automated API Documentation
